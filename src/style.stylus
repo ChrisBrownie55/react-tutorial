@@ -1,0 +1,174 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:100,300,400')
+
+font = Roboto
+large = 2.5rem
+medium = 1.75rem
+small = 1.25rem
+
+appearance(n)
+  appearance n
+  -webkit-appearance n
+  -moz-appearance n
+
+border-radius(n)
+  border-radius n
+  -webkit-border-radius n
+  -moz-border-radius n
+
+square(n)
+  width n 
+  height n 
+
+centerY()
+  top 50%
+  transform translateY(-50%)
+
+transition(b, properties)
+  result = unquote(join(' '+b+', ', properties)+' '+b)
+  transition result
+  -webkit-transition result
+  -moz-transition result
+
+default-transition(properties)
+  transition('0.2s ease-in-out', properties)
+
+grid(width, height)
+    display grid
+    grid-template-columns repeat(width, 1fr)
+    grid-template-rows repeat(height, 1fr)
+
+centerChildren()
+    display flex
+    justify-content center
+    align-items center
+
+html
+    font-size 10px
+
+body
+    margin 0
+
+.flex
+    display flex
+
+    &.row
+        flex-direction: row
+
+    &.column
+        flex-direction: column
+
+.toggle-button
+    display flex
+    flex-direction: row
+    justify-content: center
+    align-items: center
+
+    input
+        display none
+        appearance none
+
+        & + label
+            margin-right: 0.35rem
+            width 4rem
+            height 1.8rem
+            display block
+            background-color #eee
+            position relative
+            border-radius 1.8rem
+            default-transition background-color
+            cursor pointer
+
+            &::after
+                content ''
+                square 2rem
+                border-radius 100%
+                position absolute
+                left -0.1rem
+                centerY()
+                background-color lightgrey
+                default-transition(background-color left)
+                cursor pointer
+
+        &:checked + label
+            background-color #222
+
+            &::after
+                left calc(100% - 1.9rem)
+                background-color darkgrey
+
+        &:not(:checked) ~ p
+            color lightgrey
+
+        &:checked ~ p
+            color #222
+
+    p
+        font-size small
+        font-family font
+        default-transition color
+
+main
+    width 100vw
+    height 100vh
+    flex-direction column
+    centerChildren()
+    
+    .status
+        font-family font
+        font-size large
+        margin-bottom medium
+    
+    section
+        width 100%
+        display grid
+        grid-template-columns auto 18rem 30vw 18rem auto
+
+        .board
+            grid-column 3
+            grid(3, 3)
+            width 30vw
+            height 30vw
+
+            .square
+                background black
+                border #222 1px solid
+                color white
+                font-size large
+                cursor pointer
+
+                &:focus
+                    outline none
+
+                &:hover
+                    background-color #222
+
+                &.highlighted
+                    background-color grey
+        
+        .history
+            list-style none
+            margin: 0
+            grid-column 4
+
+            .history-item
+                cursor: pointer
+                font-size medium
+                font-family font
+                background-color #eee
+                color #555
+                padding: 0.3rem 0.75rem
+                white-space nowrap
+
+                &.bold
+                    font-weight: bold
+
+                &:first-child
+                    border-top-left-radius 0.25rem
+                    border-top-right-radius 0.25rem
+
+                &:last-child
+                    border-bottom-left-radius 0.25rem
+                    border-bottom-right-radius 0.25rem
+
+                &:hover
+                    background-color #ddd
